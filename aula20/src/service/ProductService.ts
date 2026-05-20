@@ -17,16 +17,12 @@ export class ProdutoService {
 
     criar(data: any): Produto {
 
-        if (!data.id || !data.nome || !data.preco || !data.fabricante) {
-            throw new Error("Produto requer id, nome, preco e fabricante")
+        if (!data.nome || !data.preco || !data.fabricante) {
+            throw new Error("Produto requer nome, preco e fabricante")
         }
 
         if (data.preco <= 0) {
             throw new Error("Preco deve ser maior que zero")
-        }
-
-        if (this.repository.buscarPorId(data.id)) {
-            throw new Error("Ja existe produto com esse ID")
         }
 
         if (!data.fabricante.nome) {
@@ -52,7 +48,6 @@ export class ProdutoService {
         )
 
         const produto = new Produto(
-            data.id,
             data.nome,
             data.preco,
             fabricante
@@ -69,6 +64,14 @@ export class ProdutoService {
 
         if (!produto) {
             throw new Error("Produto nao encontrado")
+        }
+
+        if (!data.nome || !data.preco || !data.fabricante) {
+            throw new Error("Produto requer nome, preco e fabricante")
+        }
+
+        if (data.preco <= 0) {
+            throw new Error("Preco deve ser maior que zero")
         }
 
         produto.nome = data.nome
