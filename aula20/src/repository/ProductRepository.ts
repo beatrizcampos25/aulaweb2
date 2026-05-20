@@ -1,28 +1,29 @@
-import {Produto} from "../model/Produto";
+import { Produto } from "../model/Produto"
 
-export class ProductRepository {
-    private static instance : ProductRepository;
-    private productList : Produto [] = [];
+const produtos: Produto[] = []
 
-    private constructor () {}
+export class ProdutoRepository {
 
-    public static getInstance () : ProductRepository {
-        if (! this . instance ) {
-            this . instance = new ProductRepository () ;
+    listar(): Produto[] {
+        return produtos
+    }
+
+    buscarPorId(id: number): Produto | undefined {
+        return produtos.find(p => p.id === id)
+    }
+
+    salvar(produto: Produto): void {
+        produtos.push(produto)
+    }
+
+    remover(id: number): Produto | undefined {
+
+        const indice = produtos.findIndex(p => p.id === id)
+
+        if (indice === -1) {
+            return undefined
         }
 
-        return this . instance ;
-    }
-
-    insereProduto ( product : Produto ) {
-        this . productList . push ( product ) ; 
-    }
-
-    filtraProdutoPorId ( id : number ) : Produto | undefined {
-        return this . productList.find( product => product . id === id ) ;
-    }
-
-    filtraTodosProdutos () : Produto []{
-        return this . productList ;
+        return produtos.splice(indice, 1)[0]
     }
 }
